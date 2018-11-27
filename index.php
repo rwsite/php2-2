@@ -1,11 +1,6 @@
 <?php
 
-use App\Model;
+use App\Models\Person;
 
 require __DIR__ . '/autoload.php';
 
-$data = \App\Models\Person::FindAll();
-
-echo '<pre>';
-var_dump($data);
-echo '</pre>';

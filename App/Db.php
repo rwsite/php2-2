@@ -5,43 +5,66 @@ namespace App;
 class Db
 {
 
-    protected $dbh;
+  protected static $dbh;
 
-    public function __construct()
-    {
-        $host = 'localhost';
-        $dbname = 'profit';
-        $user = 'mysql';
-        $password = 'mysql';
+  public function __construct()
+  {
+    $dsn = 'mysql:dbname=profit;host=localhost';
+    $user = 'mysql';
+    $password = 'mysql';
 
-        $this->dbh = new \PDO ('mysql:dbname=' . $dbname . ';host=' . $host, $user, $password); // Новое подключение к mysql
+    self::$dbh = new \PDO ($dsn, $user, $password); // Новое подключение к mysql
+    /**
+     * Вывод ошибок везде делают через try catch.. при создании подключения?
+     * https://habr.com/post/137664/
+     */
+  }
+
+
+  public function query($sql, $data = [], $class = '')
+  {
+
+    self::$dbh->setAttribute(\PDO::ATTR_EMULATE_PREPARES, false);
+    $sth = self::$dbh->prepare($sql); // подготовка запроса
+
+    // Проверка на корректность запроса
+    if (false === $sth) {
+      echo 'Error occurred:' . implode(":", self::$dbh->errorInfo());
+      return $sth;
     }
 
-    public function query($sql, $data = [], $class = '')
-    {
+    $sth->execute($data); // запуск подготовленного запроса
+    $class = $sth->fetchAll(\PDO::FETCH_CLASS); // возвращает результат
+    // Если нет результата
+    if(empty($class))
+      return false;
 
-        // про PDO http://phpfaq.ru/pdo
-        $sth = $this->dbh->prepare($sql); // подготовка запроса
-        $sth->execute($data); // запуск подготовленного запроса
+    return $class;
+  }
 
-        $data = $sth->fetchAll(\PDO::FETCH_ASSOC); // возвращает результат
+  /**
+   * @param $sql - подготовленный запрос mysql
+   * @param array $data - массив подстановок
+   * @param string $class - имя класса, в котором вызывается
+   * @return bool - в случасае успеха true
+   */
+  public function query_add($sql, $data = [], $class = '')
+  {
 
-        if (empty($class)) // имя класса пустое
-            return $data;
-
-        $ret = [];
-
-        foreach ($data as $row) { // выводим по одной записи таблицы
-            $obj = new $class; // новый объект класса, напрмиер Person
-            foreach ($row as $col => $value) {
-                $obj->$col = $value; // записываем свойство класса из бд
-            }
-            $ret[] = $obj;
-        }
-        return $ret;
+    self::$dbh->setAttribute(\PDO::ATTR_EMULATE_PREPARES, false);
+    $sth = self::$dbh->prepare($sql); // подготовка запроса
+    // Проверка на корректность запроса
+    if (false === $sth) {
+      echo 'Error occurred:' . implode(":", self::$dbh->errorInfo());
+      return false;
     }
+
+    $sth->execute($data); // запуск подготовленного запроса
+    if (assert(self::$dbh->errorCode() === '00000')) {
+      return true; // Завершилось без ошибок, классу пустой. Вернем успех.
+    }
+    return false;
+  }
+
 
 }
-
-
-//var_dump($db->query('SELECT * FROM persons WHERE id=:id', [':id' => 1]));
