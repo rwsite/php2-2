@@ -5,7 +5,7 @@ namespace App;
 
 abstract class Model
 {
-  protected static $table = 'persons';//защищенное статическое свойсво, можно заменить на константу
+  protected static $table = '';//защищенное статическое свойсво, можно заменить на константу
 
   public $id;
 
@@ -34,9 +34,8 @@ abstract class Model
   {
     $db = new Db;
     $sql = 'INSERT INTO ' . static::$table . '(`LastName`,`FirstName`,`Age`)' . 'VALUES (:f_name, :l_name, :age)';
-    return $db->query_add($sql, [':f_name' => $f_name, ':l_name' => $l_name, ':age' => $age], static::class);
+    return $db->execute($sql, [':f_name' => $f_name, ':l_name' => $l_name, ':age' => $age], static::class);
   }
-
 
 
 }
