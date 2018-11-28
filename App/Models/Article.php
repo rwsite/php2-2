@@ -7,7 +7,10 @@ use App\Model;
 
 class Article extends Model
 {
-  public $id;
+
+  protected static $table = 'article';
+
+  //public $id; - уже объявлено в модели
   public $title;
   public $content;
   public $thumbnail;
@@ -16,7 +19,6 @@ class Article extends Model
   {
 
   }
-
 
   /**
    * @return mixed
@@ -33,6 +35,4 @@ class Article extends Model
   {
     return $this->content;
   }
-
-
 }

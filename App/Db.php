@@ -29,7 +29,7 @@ class Db
 
     // Проверка на корректность запроса
     if (false === $sth) {
-      echo 'Error occurred:' . implode(":", self::$dbh->errorInfo());
+      echo '<p class="warning"> Error occurred:' . implode(":", self::$dbh->errorInfo()) . '<p>';
       return $sth;
     }
 

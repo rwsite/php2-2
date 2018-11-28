@@ -14,6 +14,7 @@ class Person extends Model
   public $FirstName;
   public $Age;
 
+  /** Функция из задания. Урок 1.  */
   public static function AddPerson($f_name = 'Вася', $l_name = 'Иванов', $age = '')
   {
     $db = new Db;
