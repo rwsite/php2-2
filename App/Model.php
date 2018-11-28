@@ -30,12 +30,4 @@ abstract class Model
     return $db->query($sql, [':id' => $id], static::class);
   }
 
-  public static function AddPerson($f_name = 'John', $l_name = 'Doe', $age = '')
-  {
-    $db = new Db;
-    $sql = 'INSERT INTO ' . static::$table . '(`LastName`,`FirstName`,`Age`)' . 'VALUES (:f_name, :l_name, :age)';
-    return $db->execute($sql, [':f_name' => $f_name, ':l_name' => $l_name, ':age' => $age], static::class);
-  }
-
-
 }
