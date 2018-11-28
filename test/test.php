@@ -8,7 +8,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/autoload.php';
 #$data = Person::AddPerson('Вася', 'Иванов', '20');
 
 // получить запись
-$data = Person::findById('1');
+#$data = Person::findById('1');
 
 echo '<pre>';
 var_dump($data);

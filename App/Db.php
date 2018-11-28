@@ -38,28 +38,18 @@ class Db
     // Если нет результата
     if(empty($class))
       return false;
-
     return $class;
   }
 
   /**
-   * @param $sql - подготовленный запрос mysql
-   * @param array $data - массив подстановок
-   * @param string $class - имя класса, в котором вызывается
-   * @return bool - в случасае успеха true
+   * @param $query
+   * @param array $params
+   * @return bool
    */
-  public function query_add($sql, $data = [], $class = '')
+  public function execute($query, $params = [])
   {
-
-    self::$dbh->setAttribute(\PDO::ATTR_EMULATE_PREPARES, false);
-    $sth = self::$dbh->prepare($sql); // подготовка запроса
-    // Проверка на корректность запроса
-    if (false === $sth) {
-      echo 'Error occurred:' . implode(":", self::$dbh->errorInfo());
-      return false;
-    }
-
-    $sth->execute($data); // запуск подготовленного запроса
+    $sth = self::$dbh->prepare($query);
+    $sth->execute($params); // запуск подготовленного запроса
     if (assert(self::$dbh->errorCode() === '00000')) {
       return true; // Завершилось без ошибок, классу пустой. Вернем успех.
     }

@@ -7,12 +7,10 @@ use App\Model;
 
 class Person extends Model
 {
-    protected static $table_name = 'persons';
+  protected static $table = 'persons';
 
-    public $id;
     public $LastName;
     public $FirstName;
     public $Age;
-
 
 }
