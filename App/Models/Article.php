@@ -3,10 +3,12 @@
 namespace App\Models;
 
 
-class Article
+use App\Model;
+
+class Article extends Model
 {
   public $id;
-  public $titlte;
+  public $title;
   public $content;
   public $thumbnail;
 
@@ -15,6 +17,22 @@ class Article
 
   }
 
+
+  /**
+   * @return mixed
+   */
+  public function getTitle()
+  {
+    return $this->title;
+  }
+
+  /**
+   * @return mixed
+   */
+  public function getContent()
+  {
+    return $this->content;
+  }
 
 
 }
