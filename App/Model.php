@@ -23,11 +23,11 @@ abstract class Model
     // Static - имя класса, где вызывается во время выполнения
   }
 
-  public static function findById($id)
+  public static function findById(int $id)
   {
     $db = new Db;
     $sql = 'SELECT * FROM ' . static::$table . ' WHERE id=:id';
-    return $db->query($sql, [':id' => $id], static::class);
+    return $db->query($sql, [':id' => $id], static::class)[0];
   }
 
 }

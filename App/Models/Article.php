@@ -8,17 +8,12 @@ use App\Model;
 class Article extends Model
 {
 
-  protected static $table = 'article';
+  protected static $table = 'articles';
 
   //public $id; - уже объявлено в модели
   public $title;
   public $content;
   public $thumbnail;
-
-  public function __construct()
-  {
-
-  }
 
   /**
    * @return mixed

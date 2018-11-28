@@ -1,15 +1,14 @@
 <?php
 /**
- * Шаблон вывода записей
+ * Шаблон вывода всех записей
  */
 
 use App\Models\Article;
 
 $articles = Article::FindAll();
 
-$title = 'Главная страница Блога';
-
-var_dump($articles[0]);
+$title = 'Блог программиста';
+$subtitle = '...';
 
 ?>
 
@@ -23,21 +22,74 @@ var_dump($articles[0]);
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-  <link rel="stylesheet" type="text/css" href="/assets/css/style.css">
+
+  <link rel="stylesheet" type="text/css" href="../assets/css/style.css">
 
   <title><?= $title ?></title>
 </head>
 <body>
-<h1><?= $title ?></h1>
 
-<?php foreach ($articles as $article) {
+<!-- Page Content -->
+<div class="container">
+
+  <!-- Page Heading -->
+  <h1 class="my-4"><?= $title ?>
+    <small><?php echo $subtitle ?></small>
+  </h1>
+
+  <?php foreach ($articles as $article) {
+    ?>
+    <!-- Project One -->
+    <article>
+      <div class="row">
+        <div class="col-md-7">
+          <a href="#">
+            <img class="img-fluid rounded mb-3 mb-md-0" src="<?= $article->thumbnail ?>" alt="700x300">
+          </a>
+        </div>
+        <div class="col-md-5">
+          <h3><?= $article->title ?></h3>
+          <p><?= $article->content ?></p>
+          <a class="btn btn-primary" href="#">Continue reading</a>
+        </div>
+      </div>
+      <!-- /.row -->
+    </article>
+    <hr>
+    <?php
+  }
   ?>
-  <img src="<?= $article->thumbnail ?>" width="200">
-  <h4><?= $article->title ?></h4>
-  <div><?= $article->content ?></div>
-  <?php
-}
-?>
+
+  <!-- Pagination -->
+  <ul class="pagination justify-content-center">
+    <li class="page-item">
+      <a class="page-link" href="#" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+        <span class="sr-only">Previous</span>
+      </a>
+    </li>
+    <li class="page-item">
+      <a class="page-link" href="#">1</a>
+    </li>
+    <li class="page-item">
+      <a class="page-link" href="#">2</a>
+    </li>
+    <li class="page-item">
+      <a class="page-link" href="#">3</a>
+    </li>
+    <li class="page-item">
+      <a class="page-link" href="#" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+        <span class="sr-only">Next</span>
+      </a>
+    </li>
+  </ul>
+
+</div>
+<!-- /.container -->
+
+
+
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
