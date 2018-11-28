@@ -25,16 +25,16 @@
 <div class="container">
 
   <!-- Page Heading -->
-  <h1 class="my-4"><?= $title ?>
+  <a href="/">
+    <h3 class="my-4"><?= $title ?>
     <small><?php echo $subtitle ?></small>
-  </h1>
+    </h3>
+  </a>
 
   <div class="row">
     <div class="col-md-12">
-      <a href="#">
         <img class="img-fluid rounded mb-3 mb-md-0" src="<?= $article->thumbnail ?>" alt="700x300">
-      </a>
-      <h3><?= htmlspecialchars($article->title) ?></h3>
+      <div><h1><?= htmlspecialchars($article->title) ?></h1></div>
       <div><?= htmlspecialchars($article->content) ?></div>
     </div>
   </div>
