@@ -27,7 +27,10 @@ abstract class Model
   {
     $db = new Db;
     $sql = 'SELECT * FROM ' . static::$table . ' WHERE id=:id';
-    return $db->query($sql, [':id' => $id], static::class)[0];
+    $result = $db->query($sql, [':id' => $id], static::class)[0];
+    if ($result == null)
+      $result = false;
+    return $result;
   }
 
 }

@@ -2,19 +2,6 @@
 /**
  * Шаблон вывода одной записи
  */
-
-
-use App\Models\Article;
-
-if (empty($_GET['id']))
-  $id = 1;
-$id = filter_var($_GET['id'], FILTER_VALIDATE_INT);
-
-$article = Article::findById($id);
-
-$title = 'Блог программиста';
-$subtitle = '...';
-
 ?>
 
 <!doctype html>

@@ -6,7 +6,7 @@
 use App\Models\Article;
 
 $articles = Article::FindAll();
-
+$articles = array_reverse($articles);
 $title = 'Блог программиста';
 $subtitle = '...';
 
@@ -43,14 +43,14 @@ $subtitle = '...';
     <article>
       <div class="row">
         <div class="col-md-7">
-          <a href="#">
+          <a href="/article.php?id=<?= $article->id ?>">
             <img class="img-fluid rounded mb-3 mb-md-0" src="<?= $article->thumbnail ?>" alt="700x300">
           </a>
         </div>
         <div class="col-md-5">
           <h3><?= $article->title ?></h3>
           <p><?= $article->content ?></p>
-          <a class="btn btn-primary" href="#">Continue reading</a>
+          <a class="btn btn-primary" href="/article.php?id=<?= $article->id ?>">Continue reading</a>
         </div>
       </div>
       <!-- /.row -->
