@@ -22,6 +22,10 @@
     .form-control {
       height: unset;
     }
+
+    th.title {
+      min-width: 300px;
+    }
   </style>
 </head>
 
@@ -175,7 +179,7 @@ Tip 2: you can also add an image using data-image tag
                   <?php
                   $columns = ['' => ''] + $columns;
                   foreach ($columns as $column => $null) {
-                    echo '<th>' . $column . '</th>';
+                    echo '<th class="' . $column . '">' . $column . '</th>';
                   } ?>
                   </thead>
                   <tbody>
