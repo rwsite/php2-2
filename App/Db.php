@@ -20,40 +20,42 @@ class Db
      */
   }
 
-
+  /**
+   * Выполняет SQL запроc к БД
+   *
+   * @param $sql - запрос
+   * @param array $data - данные для подставновки
+   * @param string $class - имя класса, где был вызов.
+   * @return array|bool|string  -  возвращает объект, массив объектов или false, если неудача
+   */
   public function query($sql, $data = [], $class = '')
   {
-
     self::$dbh->setAttribute(\PDO::ATTR_EMULATE_PREPARES, false);
     $sth = self::$dbh->prepare($sql); // подготовка запроса
 
     // Проверка на корректность запроса
     if (false === $sth) {
       echo '<p class="warning"> Error occurred:' . implode(":", self::$dbh->errorInfo()) . '<p>';
-      return $sth;
-    }
-
-    $sth->execute($data); // запуск подготовленного запроса
-    $class = $sth->fetchAll(\PDO::FETCH_CLASS); // возвращает результат
-    // Если нет результата
-    if(empty($class))
       return false;
-    return $class;
+    }
+    $sth->execute($data); // запуск подготовленного запроса
+    $obj = $sth->fetchAll(\PDO::FETCH_CLASS, $class); // Возвращает все объекты
+    //$obj = $sth->fetchObject( $class ); // возвращает 1 объект
+    return $obj;
   }
 
   /**
-   * @param $query
-   * @param array $params
-   * @return bool
+   * Выполняет операции обновления/вставки/выборки
+   *
+   * @param $sql
+   * @param array $data
+   * @return bool - true в случае успеха
    */
-  public function execute($query, $params = [])
+  public function execute($sql, $data = [])
   {
-    $sth = self::$dbh->prepare($query);
-    $sth->execute($params); // запуск подготовленного запроса
-    if (assert(self::$dbh->errorCode() === '00000')) {
-      return true; // Завершилось без ошибок, классу пустой. Вернем успех.
-    }
-    return false;
+    $sth = self::$dbh->prepare($sql);
+    // var_dump($sth); exit();
+    return $sth->execute($data); // запуск подготовленного запроса
   }
 
 
