@@ -1,6 +1,8 @@
 <?php
 
 
+use App\Config;
+
 require_once dirname(__DIR__) . '/autoload.php';
 
 // добавить запись
@@ -9,8 +11,8 @@ require_once dirname(__DIR__) . '/autoload.php';
 // получить запись
 #$data = Person::findById('1');
 
-/*$config = Config::getInstance();
-$data = $config->get_data();*/
+$config = Config::getInstance();
+$data = $config->getData();
 
 /* Добавить запись через Active Record
 $data = new \App\Models\Product('Сапоги', '1', '1', 'Сапоги резиновые', '0');
@@ -27,11 +29,13 @@ $data->price = 4000;
 $result = $data->save();
 */
 
+/*
 $data = \App\Models\Product::findById(20);
 $data->price = 4000;
 $result = $data->delete();
+*/
 
 echo '<pre>';
-var_dump($result);
+var_dump($data);
 echo '<br>';
 echo '</pre>';

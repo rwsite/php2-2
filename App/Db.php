@@ -9,6 +9,7 @@ class Db
 
   public function __construct()
   {
+
     $dsn = 'mysql:dbname=profit;host=localhost';
     $user = 'mysql';
     $password = 'mysql';

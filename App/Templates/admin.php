@@ -9,7 +9,7 @@
   <title><?= $title . ' - ' . $subtitle ?></title>
   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
         name='viewport'/>
-  <!--     Fonts and icons     -->
+  <!-- Fonts and icons -->
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet"/>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css"/>
   <!-- CSS Files -->
@@ -192,9 +192,9 @@ Tip 2: you can also add an image using data-image tag
                           <span aria-hidden="true" class="icon_pencil"></span>
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                          <a class="dropdown-item" href="admin.php">Редактировать</a>
-                          <a class="dropdown-item" href="#">Удалить</a>
-                          <a class="dropdown-item" href="#">Дублировать</a>
+                          <a class="dropdown-item" href="admin.php?action=edit">Редактировать</a>
+                          <a class="dropdown-item" href="admin.php?action=delete">Удалить</a>
+                          <a class="dropdown-item" href="admin.php?action=duplicate">Дублировать</a>
                         </div>
                       </div>
                     </td>';

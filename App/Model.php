@@ -100,7 +100,8 @@ abstract class Model
   }
 
   /**
-   * Удалить запись из БД. DELETE FROM table_name WHERE condition;
+   * Удалить запись из БД.
+   * DELETE FROM table_name WHERE condition;
    *
    * @return bool
    */

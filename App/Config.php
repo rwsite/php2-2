@@ -10,15 +10,14 @@ class Config implements HasRead, HasSave
 {
   private static $_instance = null;
 
-  private static $db = 'sdf';
-  private static $host = 'sdf';
-  private static $user = 'sdf';
-  private static $password = 'sdf';
-  private static $data;
+  private static $db = 'profit';
+  private static $host = 'localhost';
+  private static $user = 'mysql';
+  private static $password = 'mysql';
 
   private function __construct()
   {
-    self::$_instance = $this->get_data();
+    self::$_instance = $this->getData();
   }
 
   private function __clone()
@@ -31,6 +30,7 @@ class Config implements HasRead, HasSave
     // Одиночки не должны быть восстанавливаемыми из строк.
   }
 
+
   public static function getInstance()
   {
     if (self::$_instance != null) {
@@ -39,10 +39,15 @@ class Config implements HasRead, HasSave
     return new self;
   }
 
-  public function get_data()
+  public function getData()
   {
-    self::$data = [self::$db, self::$host, self::$user, self::$password];
-    return self::$data;
+    $data = [ self::$db, self::$host, self::$user, self::$password ];
+    return $data;
+  }
+
+  public function getConnection()
+  {
+    //
   }
 
 }
