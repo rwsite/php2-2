@@ -22,7 +22,6 @@
     .form-control {
       height: unset;
     }
-
     th.title {
       min-width: 300px;
     }
@@ -192,17 +191,23 @@ Tip 2: you can also add an image using data-image tag
                           <span aria-hidden="true" class="icon_pencil"></span>
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                          <a class="dropdown-item" href="admin.php?action=edit">Редактировать</a>
-                          <a class="dropdown-item" href="admin.php?action=delete">Удалить</a>
-                          <a class="dropdown-item" href="admin.php?action=duplicate">Дублировать</a>
+                          <a class="dropdown-item" href="admin.php?action=edit&class=' . get_class($article) . '&id=' . $article->id . '">Редактировать</a>
+                          <a class="dropdown-item" href="admin.php?action=delete&class=' . get_class($article) . '&id=' . $article->id . '">Удалить</a>
                         </div>
                       </div>
                     </td>';
-
-                    $article = array_reverse((array)$article);
                     foreach ((array)$article as $key => $value) {
-                      $html = $key == 'thumbnail' ? $html . '<td><img src=" ' . $value . ' " height="40"></td>' : $html . '<td>' . $value . '</td>';
+                      $html .= '<td>';
+                      if (empty($value)) {
+                        continue;
+                      } elseif ($key == 'thumbnail' and !empty($value)) {
+                        $html .= '<img src=" ' . $value . ' " height="40">';
+                      } else {
+                        $html .= $value;
+                      }
+                      $html .= '</td>';
                     }
+
                     $html .= '</tr>';
                     echo $html;
                   } ?>
@@ -264,30 +269,32 @@ Tip 2: you can also add an image using data-image tag
         </button>
       </div>
       <div class="modal-body">
-        <form>
+
+        <form method="post" action="admin.php?action=<?= 'save&class=' . $class ?>">
           <div class="form-group">
-            <input class="form-control" type="text" placeholder="Название">
+            <input class="form-control" type="text" name="title" placeholder="Название">
           </div>
           <div class="form-group">
             <label for="img">Url изображения</label>
-            <input id="img" class="form-control" type="text" placeholder="Изображение">
+            <input id="img" class="form-control" name="img" type="text" placeholder="Изображение">
           </div>
           <div class="form-group">
             <label for="content">Содержание</label>
-            <textarea class="form-control" id="content" rows="5"></textarea>
+            <textarea class="form-control" id="content" name="content" rows="5"></textarea>
           </div>
+          <button type="submit" class="btn btn-primary">Добавить</button>
         </form>
       </div>
-      <div class="modal-footer">
-        <!--<button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>-->
-        <button type="button" class="btn btn-primary">Добавить</button>
-      </div>
+      <!--      <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+              <button type="submit" class="btn btn-primary">Добавить</button>
+            </div>-->
     </div>
   </div>
 </div>
 
 
-<!-- Modal Action -->
+<!-- Modal Action Notice -->
 <div class="modal fade modal-mini modal-primary" id="action" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
      aria-hidden="true">
   <div class="modal-dialog">

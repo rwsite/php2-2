@@ -3,10 +3,7 @@
 namespace App;
 
 
-use App\Models\HasRead;
-use App\Models\HasSave;
-
-class Config implements HasRead, HasSave
+class Config
 {
   private static $_instance = null;
 
