@@ -17,13 +17,24 @@ class Admin
     $action = self::validate();
     $class = self::validate('class', 'html');
 
-    if ($action === 'save') {
+    if ($action === 'insert') {
       $title = self::validate('title', 'html', INPUT_POST);
-      $img = self::validate('img', '', INPUT_POST);
+      $img = self::validate('img', 'html', INPUT_POST);
       $content = self::validate('content', 'html', INPUT_POST);
       //  var_dump($title . '<br>' . $content );
       $obj = new $class($title, $content, $img);
       // var_dump($obj);
+    } elseif ($action === 'save') {
+      $id = (int)self::validate('id', 'int');
+      $title = self::validate('title', 'html', INPUT_POST);
+      $img = self::validate('img', 'html', INPUT_POST);
+      $content = self::validate('content', 'html', INPUT_POST);
+
+      $obj = $class::findById($id); //Поиск объекта для взаимодействия
+      $obj->title = $title;
+      $obj->thumbnail = $img;
+      $obj->content = $content;
+
     } else {
       $id = (int)self::validate('id', 'int');
       if (!empty($id))

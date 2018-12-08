@@ -168,8 +168,8 @@ Tip 2: you can also add an image using data-image tag
                   <p class="card-category">Статьи на сайте</p>
                 </div>
                 <div>
-                  <a href="admin.php?add" class="btn btn-primary" data-toggle="modal" data-target="#add-new">Добавить
-                    новую</a>
+                  <a href="admin.php?add" class="btn btn-primary" data-toggle="modal" data-target="#add-new">
+                    Добавить новую</a>
                 </div>
               </div>
               <div class="card-body table-full-width table-responsive">
@@ -184,30 +184,59 @@ Tip 2: you can also add an image using data-image tag
                   <tbody>
                   <?php
                   foreach ($articles as $article) {
-                    $html = '<tr>';
-                    $html .= '
+                  ?>
+                  <tr>
                     <td><div class="dropdown">
                         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                           <span aria-hidden="true" class="icon_pencil"></span>
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                          <a class="dropdown-item" href="admin.php?action=edit&class=' . get_class($article) . '&id=' . $article->id . '">Редактировать</a>
-                          <a class="dropdown-item" href="admin.php?action=delete&class=' . get_class($article) . '&id=' . $article->id . '">Удалить</a>
+                          <a class="dropdown-item" data-toggle="modal" data-target="#<?= $article->id ?>" href="#">Редактировать</a>
+                          <a class="dropdown-item"
+                             href="admin.php?action=delete&class=<?= get_class($article) ?>&id=<?= $article->id ?>">Удалить</a>
+                        </div>
+                        <!-- Модальное окно. Врменное решение, только для показа функционала php. Должно быть замено либо на ajax, либо на отдельную страницу -->
+                        <div class="modal fade" id="<?= $article->id ?>" tabindex="-1" role="dialog"
+                             aria-labelledby="<?= $article->id ?>" aria-hidden="true">
+                          <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                            <div class="modal-content">
+                              <div class="modal-body">
+                                <form method="post"
+                                      action="admin.php?action=<?= 'save' ?>&class=<?= get_class($article) ?>&id=<?= $article->id ?>">
+                                  <div class="form-group">
+                                    <input class="form-control" type="text" name="title" value="<?= $article->title ?>">
+                                  </div>
+                                  <div class="form-group">
+                                    <label for="img">Url изображения</label>
+                                    <input id="img" class="form-control" name="img" type="text"
+                                           value="<?= $article->thumbnail ?>">
+                                  </div>
+                                  <div class="form-group">
+                                    <label for="content">Содержание</label>
+                                    <textarea class="form-control" id="content" name="content"
+                                              rows="5"><?= $article->content ?></textarea>
+                                  </div>
+                                  <button type="submit" class="btn btn-primary">Сохранить</button>
+                                </form>
+                              </div>
+                            </div>
+                          </div>
                         </div>
                       </div>
-                    </td>';
+                    </td>
+                    <?php
+                    $html = '';
                     foreach ((array)$article as $key => $value) {
                       $html .= '<td>';
                       if (empty($value)) {
                         continue;
                       } elseif ($key == 'thumbnail' and !empty($value)) {
-                        $html .= '<img src=" ' . $value . ' " height="40">';
+                        $html .= '<img src="' . $value . '" height="40">';
                       } else {
                         $html .= $value;
                       }
                       $html .= '</td>';
                     }
-
                     $html .= '</tr>';
                     echo $html;
                   } ?>
@@ -270,7 +299,7 @@ Tip 2: you can also add an image using data-image tag
       </div>
       <div class="modal-body">
 
-        <form method="post" action="admin.php?action=<?= 'save&class=' . $class ?>">
+        <form method="post" action="admin.php?action=<?= 'insert&class=' . $class ?>">
           <div class="form-group">
             <input class="form-control" type="text" name="title" placeholder="Название">
           </div>
@@ -324,8 +353,10 @@ Tip 2: you can also add an image using data-image tag
 <script src="../App/assets/js/core/bootstrap.min.js" type="text/javascript"></script>
 <!--  Plugin for Switches, full documentation here: http://www.jque.re/plugins/version3/bootstrap.switch/ -->
 <script src="../App/assets/js/plugins/bootstrap-switch.js"></script>
-<!--  Google Maps Plugin    -->
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
+
+
+<!--  Google Maps Plugin
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script> -->
 <!--  Chartist Plugin  -->
 <script src="../App/assets/js/plugins/chartist.min.js"></script>
 <!--  Notifications Plugin    -->
