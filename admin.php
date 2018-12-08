@@ -26,8 +26,7 @@ $articles = App\Models\Article::FindAll();
 
 $class = App\Models\Article::class;
 $columns = get_class_vars(App\Models\Article::class);// Class vars
-// Переместим id в начало массива
-$columns = $columns;
+
 $articles = array_reverse($articles);
 
 
